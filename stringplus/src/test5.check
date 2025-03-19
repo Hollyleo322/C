@@ -1,0 +1,38 @@
+#include "s21_string.h"
+#include <stdlib.h>
+
+#test csharp_to_upper
+char * test = "SCHool 21";
+char * compare = "SCHOOL 21";
+char * res = s21_to_upper(test);
+ck_assert_str_eq(res,compare);
+free(res);
+
+#test csharp_to_lower
+char * test = "SCHOOL 21";
+char * compare = "school 21";
+char * res = s21_to_lower(test);
+ck_assert_str_eq(res,compare);
+free(res);
+
+#test csharp_insert
+char * test1 = "School";
+char * test2 = " 21";
+char * compare1 = "School 21";
+char * compare2 = "Scho 21ol";
+char * res = s21_NULL;
+res = s21_insert(test1, test2, 6);
+ck_assert_str_eq(res, compare1);
+free(res);
+res = s21_insert(test1, test2, 4);
+ck_assert_str_eq(res, compare2);
+free(res);
+
+#test csharp_trim
+char * test1 = " \n\b School 21 \n\b";
+char * trm1 = " \n\b";
+char * compare = "School 21";
+char * res = s21_NULL;
+res = s21_trim(test1, trm1);
+ck_assert_str_eq(res, compare);
+free(res);

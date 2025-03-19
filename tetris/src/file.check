@@ -1,0 +1,212 @@
+#include <check.h>
+#include "s21_tetris.h"
+
+#test init_object_test
+GameInfo_t var;
+FILE * file =  fopen("brick_game/tetris/high_score.txt", "r+");
+ck_assert_int_eq(init_object(&var,file), 0);
+ck_assert_int_eq(init_object(NULL, NULL), 1);
+fclose(file);
+
+#test memory_alloc_test
+GameInfo_t var;
+ck_assert_int_eq(memory_allocation_field(&var), 0);
+free_field(&var,1);
+ck_assert_int_eq(memory_allocation_field(NULL), 1);
+
+#test read_high_score_test
+int ptr = 1000;
+FILE * file =  fopen("brick_game/tetris/high_score.txt", "r+");
+ck_assert_int_eq(read_high_score(&ptr,file), 0);
+ck_assert_int_eq(200, ptr);
+ck_assert_int_eq(read_high_score(NULL, file), 1);
+ck_assert_int_eq(read_high_score(NULL,NULL), 1);
+fclose(file);
+
+#test init_ints_test
+GameInfo_t var;
+ck_assert_int_eq(init_ints(&var), 0);
+ck_assert_int_eq(init_ints(NULL), 1);
+
+#test memory_allocation_next_test
+GameInfo_t var;
+ck_assert_int_eq(memory_allocation_next(&var), 0);
+ck_assert_int_eq(memory_allocation_next(NULL), 1);
+
+#test init_next_figure_test
+GameInfo_t var;
+memory_allocation_next(&var);
+ck_assert_int_eq(init_next_figure(&var), 0);
+free_field(&var, 0);
+ck_assert_int_eq(init_next_figure(NULL), 1);
+
+#test init_current_figure_test
+figure a;
+GameInfo_t var;
+memory_allocation_figure(&a);
+memory_allocation_next(&var);
+ck_assert_int_eq(init_current_figure(&a,var.next), 0);
+ck_assert_int_eq(init_current_figure(&a,NULL), 1);
+ck_assert_int_eq(init_current_figure(NULL, NULL), 1);
+free_field(&var,0);
+
+
+#test moving_test
+figure var;
+memory_allocation_figure(&var);
+var.x = 5;
+var.y = 1;
+ck_assert_int_eq(move_down(&var), 0);
+ck_assert_int_eq(move_up(&var), 0);
+ck_assert_int_eq(move_left(&var), 0);
+ck_assert_int_eq(move_right(&var), 0);
+ck_assert_int_eq(move_down(NULL), 1);
+ck_assert_int_eq(move_up(NULL), 1);
+ck_assert_int_eq(move_left(NULL), 1);
+ck_assert_int_eq(move_right(NULL), 1);
+ck_assert_int_eq(var.x, 5);
+ck_assert_int_eq(var.y, 1);
+free_figure(&var);
+
+#test collision_test
+GameInfo_t pole;
+figure figure;
+memory_allocation_field(&pole);
+memory_allocation_figure(&figure);
+ck_assert_int_eq(collision(pole,figure), 0);
+for (int i =0 ; i < VALUE_SAMPLE; i++)
+{
+    for (int j = 0; j < VALUE_SAMPLE; j++)
+    {
+        figure.blocks[i][j] = 1;
+    }
+}
+for (int i =0 ; i < HEIGHT_MAIN; i++)
+{
+    for (int j = 0; j < WIDTH_MAIN; j++)
+    {
+        pole.field[i][j] = 1;
+    }
+}
+ck_assert_int_eq(collision(pole,figure), 1);
+free_field(&pole, 1);
+free_figure(&figure);
+
+#test put_current_test
+GameInfo_t pole;
+figure figure;
+memory_allocation_field(&pole);
+memory_allocation_figure(&figure);
+ck_assert_int_eq(put_current(&pole, figure), 0);
+ck_assert_int_eq(put_current(NULL, figure), 1);
+free_field(&pole, 1);
+free_figure(&figure);
+
+#test count_points_test
+GameInfo_t pole;
+memory_allocation_field(&pole);
+init_field(&pole, 0);
+ck_assert_int_eq(count_points(&pole), 0);
+init_field(&pole, 1);
+ck_assert_int_eq(count_points(&pole), 1500);
+free_field(&pole, 1);
+
+#test filled_line_test
+GameInfo_t pole;
+memory_allocation_field(&pole);
+init_field(&pole, 0);
+ck_assert_int_eq(filled_line(5, &pole), 0);
+init_field(&pole, 1);
+ck_assert_int_eq(filled_line(4, &pole), 1);
+free_field(&pole, 1);
+
+#test move_upper_lines_test
+GameInfo_t pole;
+memory_allocation_field(&pole);
+init_field(&pole, 1);
+ck_assert_int_eq(move_upper_lines(12, &pole), 0);
+ck_assert_int_eq(move_upper_lines(13,NULL), 1);
+free_field(&pole, 1); 
+
+#test update_score_test
+GameInfo_t pole;
+memory_allocation_field(&pole);
+init_field(&pole, 1);
+ck_assert_int_eq(update_score(&pole), 0);
+ck_assert_int_eq(update_score(NULL), 1);
+free_field(&pole, 1);
+
+#test create_new_figure_test
+GameInfo_t pole;
+figure current;
+memory_allocation_field(&pole);
+memory_allocation_next(&pole);
+memory_allocation_figure(&current);
+ck_assert_int_eq(create_new_figure(&pole, &current), 0);
+ck_assert_int_eq(create_new_figure(&pole, NULL), 1);
+ck_assert_int_eq(create_new_figure(NULL, NULL), 1);
+ck_assert_int_eq(create_new_figure(NULL, &current), 1);
+free_field(&pole,1);
+free_figure(&current);
+free_field(&pole, 0);
+
+#test free_figure_test
+figure current;
+memory_allocation_figure(&current);
+free_figure(&current);
+
+#test memory_allocation_figure_test
+figure current;
+ck_assert_int_eq(memory_allocation_figure(&current), 0);
+free_figure(&current);
+ck_assert_int_eq(memory_allocation_figure(NULL), 1);
+
+#test erase_field_test
+
+GameInfo_t pole;
+memory_allocation_field(&pole);
+figure current;
+memory_allocation_figure(&current);
+ck_assert_int_eq(erase_field(&pole, current), 0);
+ck_assert_int_eq(erase_field(NULL, current), 1);
+free_figure(&current);
+free_field(&pole, 1);
+
+#test free_in_the_end_of_game_test
+GameInfo_t pole;
+figure current;
+memory_allocation_field(&pole);
+memory_allocation_next(&pole);
+memory_allocation_figure(&current);
+free_in_the_end_of_game(&pole, &current);
+free_in_the_end_of_game(NULL, NULL);
+
+#test rotate_figure_test
+
+GameInfo_t pole;
+figure current;
+memory_allocation_field(&pole);
+memory_allocation_figure(&current);
+ck_assert_int_eq(rotate_figure(&pole, &current), 0);
+ck_assert_int_eq(rotate_figure(NULL, NULL), 1);
+free_field(&pole, 1);
+free_figure(&current);
+
+#test clear_field_test
+GameInfo_t pole;
+memory_allocation_field(&pole);
+ck_assert_int_eq(clear_field(&pole), 0);
+ck_assert_int_eq(clear_field(NULL), 1);
+free_field(&pole,1);
+
+#test writening_high_score_test
+int number = 25;
+ck_assert_int_eq(writening_high_score(number), 0);
+
+#test square_test
+
+figure current;
+memory_allocation_figure(&current);
+ck_assert_int_eq(square(&current), 0);
+ck_assert_int_eq(square(NULL), 1);
+free_figure(&current);

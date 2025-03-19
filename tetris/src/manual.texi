@@ -1,0 +1,112 @@
+\input texinfo
+@setfilename s21_tetris.info
+@documentencoding UTF-8
+
+@settitle s21_tetris
+
+@titlepage
+@title s21_tetris
+@subtitle s21 variant of tetris in C language
+@author gwynesst
+
+@vskip 0pt plus 1filll
+@end titlepage
+
+@headings off
+
+@contents
+
+@ifnottex
+@node Top
+@top s21_tetris
+@end ifnottex
+
+@menu
+* gui page::           
+* logic page::     
+@end menu
+
+@node gui page
+@chapter gui
+
+@code{void main_menu()} - main menu. 
+
+@code{int window_of_game(int period, int new)} - main function in gui. Painting main field and addition field . Returns 1 for end of the game, 2 for changing level.
+
+@code{void moving_figure(WINDOW *var_window_of_game)} - processing of input and erase old filed.
+
+@code{void output_pause_window()} - ouput window when game is paused.
+
+@code{void output_additional_window(WINDOW *win, GameInfo_t *var)} - output additional window
+
+@code{int get_start_for_add(GameInfo_t *var)} - counting number for coordinate of next figure in additional window. Returns number for plusing.
+
+@code{void output_next_figure(WINDOW *win, GameInfo_t *var)} - paining of next figure in additional window.
+
+@code{void output_control_window(int start_x, int start_y)} - painting of control buttons
+
+
+@node logic page
+@chapter logic page
+@code{void main_game()}
+- starts main cycle and change speed of falling figure
+
+@code{int init_object(GameInfo_t *var, FILE *file)}
+- init main structure GameInfo_t, allocation of memory for this structure. Returns 0 - success , 1 - error.
+
+@code{int memory_allocation_field(GameInfo_t *var)} - allocation memory for field. Returns 0 - success , 1 - error.
+
+@code{void free_field(GameInfo_t *var)} - free memory of field
+
+@code{void free_next(GameInfo_t *var)} - free memory of next figure
+
+@code{int read_high_score(int *high_score, FILE *file)} - read high score from file. Returns 0 - success , 1 - error.
+
+@code{int init_ints(GameInfo_t *var)} - initialization ints of structure. Returns 0 - success , 1 - error.
+
+@code{int init_next_figure(GameInfo_t *var)} - initialization random figure from 7 samples. Returns 0 - success , 1 - error.
+
+@code{int memory_allocation_next(GameInfo_t *var)} - allocation memory for next figure. Returns 0 - success , 1 - error.
+
+@code{int init_current_figure(figure *current, int **ptr_next)} - filling matrix current figure from next matrix. Returns 0 - success , 1 - error.
+
+@code{GameInfo_t updateCurrentState()} - moving figure at one point down. Returns changed structure.
+
+@code{GameInfo_t writening_current_figure(int new_current, int new_game, int update, UserAction_t action)} - main function which contains static variables, logic of update state from period or input of user. Returns changed structure.
+
+@code{int move_down(figure *var),int move_up(figure *var), int move_left(figure *var),int move_right(figure *var) } - changing coordinates of figure. Returns 0 - success , 1 - error.
+
+@code{int collision(GameInfo_t var, figure current)} - check of collision figure with field. Returns 0 - success , 1 - error.
+
+@code{int put_current(GameInfo_t *var, figure current)} - putting current figure in field, when was collision. Returns 0 - success , 1 - error.
+
+@code{int count_points(GameInfo_t *var)} - count points depending filled lines. Returns quantity of poins. 
+
+@code{int filled_line(int i, GameInfo_t *var)} - count filled lines. Returns 0 - success , 1 - error.
+
+@code{int move_upper_lines(int i, GameInfo_t *var)} - moves unfilled lines after erasing filled lines. Returns 0 - success , 1 - error.
+
+@code{int update_score(GameInfo_t *var)} - update high_score when score equal or more than high . Returns 0 - success , 1 - error.
+
+@code{int create_new_figure(GameInfo_t *var, figure *current)} - create new figure and next figure. Returns 0 - success , 1 - error.
+
+@code{void free_figure(figure *var)} - free memory of figure
+
+@code{int memory_allocation_figure(figure *var)} - allocation of memory for figure. Returns 0 - success , 1 - error.
+
+@code{int erase_field(GameInfo_t *var, figure current)} - erase field when line is filled. Returns 0 - success , 1 - error.
+
+@code{void userInput(UserAction_t action, bool hold)} - processing actions of user
+
+@code{void free_in_the_end_of_game(GameInfo_t *var, figure *current)} - free all memory in the end of game
+
+@code{int rotate_figure(GameInfo_t *var, figure *current)} - rotate current figure and processing of collision if it was. Returns 0 - success , 1 - error.
+
+@code{int clear_field(GameInfo_t *var)} - clear_field for restart . Returns 0 - success , 1 - error. 
+
+@code{int writening_high_score(int score)} - writening current high score in a file. Returns 0 - success , 1 - error.
+
+@code{int square(figure *figure)} - check figure square it or not . Returns 0 - success , 1 - error.
+
+@code{GameInfo_t do_action(GameInfo_t *var, figure *current, UserAction_t action, int check_high_score)} - processing of action of user. Returns changed structure.
+@bye

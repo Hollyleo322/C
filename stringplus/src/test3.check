@@ -1,0 +1,134 @@
+#include <string.h>
+#include "s21_sprintf.h"
+
+#test sprintf_test_g
+char array1[100];
+char array2[100];
+float test1 = 21.322;
+double test2 = 22.322322;
+long double test3 = 33.2121212121;
+s21_sprintf(array1, "%- .10g", test1);
+sprintf(array2, "%- .10g", test1);
+ck_assert_str_eq(array1,array2);
+s21_sprintf(array1, "%-+15lg", test2);
+sprintf(array2, "%-+15lg", test2);
+ck_assert_str_eq(array1,array2);
+s21_sprintf(array1, "%-+10.LG", test3);
+sprintf(array2, "%-+10.LG", test3);
+ck_assert_str_eq(array1,array2);
+s21_sprintf(array1, "%+10.LG", test3);
+sprintf(array2, "%+10.LG", test3);
+ck_assert_str_eq(array1,array2);
+s21_sprintf(array1, "%20.10g", test1);
+sprintf(array2, "%20.10g", test1);
+ck_assert_str_eq(array1,array2);
+
+
+#test sprintf_test_e
+char array1[100];
+char array2[100];
+float test1 = 21.322;
+double test2 = 0.000322322;
+long double test3 = 33.2121212121;
+s21_sprintf(array1, "%-+15le", test2);
+sprintf(array2, "%-+15le", test2);
+ck_assert_str_eq(array1,array2);
+s21_sprintf(array1, "%-+10.LE", test3);
+sprintf(array2, "%-+10.LE", test3);
+ck_assert_str_eq(array1,array2);
+s21_sprintf(array1, "%+10.Le", test3);
+sprintf(array2, "%+10.Le", test3);
+ck_assert_str_eq(array1,array2);
+s21_sprintf(array1, "%- .*e", 10,test1);
+sprintf(array2, "%- .*e", 10,test1);
+ck_assert_str_eq(array1,array2);
+
+#test sprintf_test_x
+char array1[100];
+char array2[100];
+unsigned short test1 = -5;
+unsigned int test2 = 5;
+unsigned long test3 = 21;
+s21_sprintf(array1, "%-.5hx", test1);
+sprintf(array2, "%-.5hx", test1);
+ck_assert_str_eq(array1, array2);
+s21_sprintf(array1, "%5x", test2);
+sprintf(array2, "%5x", test2);
+ck_assert_str_eq(array1, array2);
+s21_sprintf(array1, "%5x", test2);
+sprintf(array2, "%5x", test2);
+ck_assert_str_eq(array1, array2);
+s21_sprintf(array1, "%-*lX",15, test3);
+sprintf(array2, "%-*lX",15, test3);
+ck_assert_str_eq(array1, array2);
+
+#test sprintf_test_o
+char array1[100];
+char array2[100];
+unsigned short test1 = -5;
+unsigned int test2 = 5;
+unsigned long test3 = 21;
+s21_sprintf(array1, "%-.5ho", test1);
+sprintf(array2, "%-.5ho", test1);
+ck_assert_str_eq(array1, array2);
+s21_sprintf(array1, "%05o", test2);
+sprintf(array2, "%05o", test2);
+ck_assert_str_eq(array1, array2);
+s21_sprintf(array1, "%5o", test2);
+sprintf(array2, "%5o", test2);
+ck_assert_str_eq(array1, array2);
+s21_sprintf(array1, "%010lo", test3);
+sprintf(array2, "%010lo", test3);
+ck_assert_str_eq(array1, array2);
+
+#test sprintf_test_p
+char array1[100];
+char array2[100];
+unsigned short test1 = -5;
+unsigned int test2 = 5;
+unsigned long test3 = 21;
+s21_sprintf(array1, "%-15p",&test1);
+sprintf(array2, "%-15p", &test1);
+ck_assert_str_eq(array1, array2);
+s21_sprintf(array1, "%15p", &test2);
+sprintf(array2, "%15p", &test2);
+ck_assert_str_eq(array1, array2);
+s21_sprintf(array1, "%*p",5, &test2);
+sprintf(array2, "%*p",5, &test2);
+ck_assert_str_eq(array1, array2);
+s21_sprintf(array1, "%p", &test3);
+sprintf(array2, "%p", &test3);
+ck_assert_str_eq(array1, array2);
+
+#test sprintg_test_sharp
+char array1[100];
+char array2[100];
+unsigned int test1  = 14;
+float test2 = 21.;
+double test3 = 21.000001;
+s21_sprintf(array1, "%#o", test1);
+sprintf(array2, "%#o", test1);
+ck_assert_str_eq(array1, array2);
+s21_sprintf(array1, "%#x", test1);  
+sprintf(array2, "%#x", test1);
+ck_assert_str_eq(array1, array2);
+s21_sprintf(array1, "%#X", test1);  
+sprintf(array2, "%#X", test1);
+ck_assert_str_eq(array1, array2);
+s21_sprintf(array1, "%#f", test2);  
+sprintf(array2, "%#f", test2);
+ck_assert_str_eq(array1, array2);
+s21_sprintf(array1, "%#e", test2);  
+sprintf(array2, "%#e", test2);
+ck_assert_str_eq(array1, array2);
+s21_sprintf(array1, "%#E", test2);  
+sprintf(array2, "%#E", test2);
+ck_assert_str_eq(array1, array2);
+s21_sprintf(array1, "%#g", test3);  
+sprintf(array2, "%#g", test3);
+ck_assert_str_eq(array1, array2);
+
+
+
+
+

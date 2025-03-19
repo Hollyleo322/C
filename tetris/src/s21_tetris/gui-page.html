@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>gui page (s21_tetris)</title>
+
+<meta name="description" content="gui page (s21_tetris)">
+<meta name="keywords" content="gui page (s21_tetris)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html" rel="up" title="Top">
+<link href="logic-page.html" rel="next" title="logic page">
+<link href="index.html" rel="prev" title="Top">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="chapter" id="gui-page">
+<div class="header">
+<p>
+Next: <a href="logic-page.html" accesskey="n" rel="next">logic page</a>, Previous: <a href="index.html" accesskey="p" rel="prev">s21_tetris</a>, Up: <a href="index.html" accesskey="u" rel="up">s21_tetris</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<hr>
+<span id="gui"></span><h2 class="chapter">1 gui</h2>
+
+<p><code>void main_menu()</code> - main menu. 
+</p>
+<p><code>int window_of_game(int period, int new)</code> - main function in gui. Painting main field and addition field . Returns 1 for end of the game, 2 for changing level.
+</p>
+<p><code>void moving_figure(WINDOW *var_window_of_game)</code> - processing of input and erase old filed.
+</p>
+<p><code>void output_pause_window()</code> - ouput window when game is paused.
+</p>
+<p><code>void output_additional_window(WINDOW *win, GameInfo_t *var)</code> - output additional window
+</p>
+<p><code>int get_start_for_add(GameInfo_t *var)</code> - counting number for coordinate of next figure in additional window. Returns number for plusing.
+</p>
+<p><code>void output_next_figure(WINDOW *win, GameInfo_t *var)</code> - paining of next figure in additional window.
+</p>
+<p><code>void output_control_window(int start_x, int start_y)</code> - painting of control buttons
+</p>
+
+</div>
+
+
+
+</body>
+</html>

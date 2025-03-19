@@ -1,0 +1,2 @@
+@numchapentry{gui}{1}{gui page}{1}
+@numchapentry{logic page}{2}{logic page}{2}
